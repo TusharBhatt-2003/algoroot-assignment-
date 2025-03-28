@@ -11,7 +11,9 @@ export default function Home() {
         {/* <Image src="/logo.png" alt="Logo" width={60} height={60} className="mx-auto mb-4" /> */}
         <h1 className="mx-auto mb-4 text-white text-4xl font-bold">LOGO</h1>
         <h1 className="text-3xl font-semibold text-white mb-2">Welcome Back</h1>
-        <p className="text-gray-300 mb-6 text-sm">Sign in or create an account to continue.</p>
+        <p className="text-gray-300 mb-6 text-sm">
+          Sign in or create an account to continue.
+        </p>
 
         <div className="space-y-3">
           <button

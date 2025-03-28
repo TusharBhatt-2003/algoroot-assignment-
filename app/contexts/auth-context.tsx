@@ -52,10 +52,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(null);
     window.location.href = "/"; // Redirect to home or login page
   };
-  
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, deleteAccount }}>
+    <AuthContext.Provider
+      value={{ user, login, signup, logout, deleteAccount }}
+    >
       {children}
     </AuthContext.Provider>
   );

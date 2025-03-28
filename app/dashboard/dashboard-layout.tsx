@@ -4,7 +4,11 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { Menu } from "lucide-react";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { user, logout, deleteAccount } = useAuth();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -13,7 +17,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   // Close sidebar when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
         setSidebarOpen(false);
       }
     }
@@ -77,11 +84,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
 
           <div className="flex items-center space-x-4 text-lg">
-            <p className="hidden sm:block font-semibold">{user?.name} | <span className="font-thin text-base">{user?.email}</span></p>
+            <p className="hidden sm:block font-semibold">
+              {user?.name} |{" "}
+              <span className="font-thin text-base">{user?.email}</span>
+            </p>
             <button
               onClick={() => {
-                logout()
-                router.push("/");}}
+                logout();
+                router.push("/");
+              }}
               className="bg-red-900 px-4 py-2 rounded-xl text-white hover:bg-red-600 transition"
             >
               Logout

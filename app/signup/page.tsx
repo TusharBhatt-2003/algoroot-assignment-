@@ -19,7 +19,9 @@ export default function Signup() {
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-br bg-gradient-to-br from-zinc-900 via-zinc-900 to-black-900">
       <div className="bg-black p-8 rounded-3xl shadow-xl text-center border border-white/20 max-w-sm w-full">
-        <h2 className="text-2xl font-semibold text-white mb-4">Create an Account</h2>
+        <h2 className="text-2xl font-semibold text-white mb-4">
+          Create an Account
+        </h2>
 
         <div className="space-y-4">
           <input
@@ -37,7 +39,7 @@ export default function Signup() {
           <input
             type="password"
             placeholder="Password"
-           className="w-full px-4 py-2 bg-zinc-900 text-white rounded-xl focus:ring focus:ring-zinc-500 outline-none"
+            className="w-full px-4 py-2 bg-zinc-900 text-white rounded-xl focus:ring focus:ring-zinc-500 outline-none"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>

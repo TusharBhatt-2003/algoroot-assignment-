@@ -14,26 +14,41 @@ type User = {
 
 export default function Details() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortConfig, setSortConfig] = useState<{ key: keyof User; direction: "asc" | "desc" } | null>(null);
+  const [sortConfig, setSortConfig] = useState<{
+    key: keyof User;
+    direction: "asc" | "desc";
+  } | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 5;
 
   const filteredData = mockData.filter((user) =>
     Object.entries(user).some(([key, value]) => {
-      if (typeof value === "string") return value.toLowerCase().includes(searchQuery.toLowerCase());
-      if (typeof value === "number" || value instanceof Date) return value.toString().includes(searchQuery);
+      if (typeof value === "string")
+        return value.toLowerCase().includes(searchQuery.toLowerCase());
+      if (typeof value === "number" || value instanceof Date)
+        return value.toString().includes(searchQuery);
       return false;
-    })
+    }),
   );
 
   const sortedData = [...filteredData].sort((a, b) => {
     if (!sortConfig) return 0;
     const { key, direction } = sortConfig;
 
-    const aValue = key.includes("Date") ? new Date(a[key]).getTime() : a[key].toString();
-    const bValue = key.includes("Date") ? new Date(b[key]).getTime() : b[key].toString();
+    const aValue = key.includes("Date")
+      ? new Date(a[key]).getTime()
+      : a[key].toString();
+    const bValue = key.includes("Date")
+      ? new Date(b[key]).getTime()
+      : b[key].toString();
 
-    return direction === "asc" ? (aValue > bValue ? 1 : -1) : (aValue < bValue ? 1 : -1);
+    return direction === "asc"
+      ? aValue > bValue
+        ? 1
+        : -1
+      : aValue < bValue
+        ? 1
+        : -1;
   });
 
   const indexOfLastRow = currentPage * rowsPerPage;
@@ -44,14 +59,16 @@ export default function Details() {
     setSortConfig((prev) =>
       prev?.key === key
         ? { key, direction: prev.direction === "asc" ? "desc" : "asc" }
-        : { key, direction: "asc" }
+        : { key, direction: "asc" },
     );
   };
 
   return (
     <DashboardLayout>
       <div className="p-3 sm:p-6 text-white shadow-lg w-full max-w-5xl mx-auto">
-        <h2 className="text-lg sm:text-2xl font-bold mb-4 text-center">User Details</h2>
+        <h2 className="text-lg sm:text-2xl font-bold mb-4 text-center">
+          User Details
+        </h2>
 
         <input
           type="text"
@@ -71,43 +88,59 @@ export default function Details() {
                     onClick={() => handleSort(key as keyof User)}
                   >
                     {key.charAt(0).toUpperCase() + key.slice(1)}{" "}
-                    {sortConfig?.key === key && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                    {sortConfig?.key === key &&
+                      (sortConfig.direction === "asc" ? "↑" : "↓")}
                   </th>
                 ))}
                 <th
                   className="p-2 sm:p-3 cursor-pointer hover:bg-black transition whitespace-nowrap hidden md:table-cell"
                   onClick={() => handleSort("joinedDate")}
                 >
-                  Joined Date {sortConfig?.key === "joinedDate" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                  Joined Date{" "}
+                  {sortConfig?.key === "joinedDate" &&
+                    (sortConfig.direction === "asc" ? "↑" : "↓")}
                 </th>
                 <th
                   className="p-2 sm:p-3 cursor-pointer hover:bg-black transition whitespace-nowrap hidden md:table-cell"
                   onClick={() => handleSort("lastLogin")}
                 >
-                  Last Login {sortConfig?.key === "lastLogin" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                  Last Login{" "}
+                  {sortConfig?.key === "lastLogin" &&
+                    (sortConfig.direction === "asc" ? "↑" : "↓")}
                 </th>
               </tr>
             </thead>
             <tbody className="text-zinc-300">
               {currentData.length > 0 ? (
                 currentData.map((user, index) => (
-                  <tr key={index} className="border-t hover:bg-zinc-900 transition">
-                    <td className="p-2 sm:p-3 whitespace-nowrap">{user.name}</td>
-                    <td className="p-2 sm:p-3 whitespace-nowrap">{user.email}</td>
+                  <tr
+                    key={index}
+                    className="border-t hover:bg-zinc-900 transition"
+                  >
+                    <td className="p-2 sm:p-3 whitespace-nowrap">
+                      {user.name}
+                    </td>
+                    <td className="p-2 sm:p-3 whitespace-nowrap">
+                      {user.email}
+                    </td>
                     <td className="p-2 sm:p-3">{user.role}</td>
                     <td
                       className={`p-2 sm:p-3 ${
                         user.status === "Active"
                           ? "text-green-400"
                           : user.status === "Inactive"
-                          ? "text-yellow-400"
-                          : "text-red-400"
+                            ? "text-yellow-400"
+                            : "text-red-400"
                       }`}
                     >
                       {user.status}
                     </td>
-                    <td className="p-2 sm:p-3 whitespace-nowrap hidden md:table-cell">{user.joinedDate}</td>
-                    <td className="p-2 sm:p-3 whitespace-nowrap hidden md:table-cell">{user.lastLogin}</td>
+                    <td className="p-2 sm:p-3 whitespace-nowrap hidden md:table-cell">
+                      {user.joinedDate}
+                    </td>
+                    <td className="p-2 sm:p-3 whitespace-nowrap hidden md:table-cell">
+                      {user.lastLogin}
+                    </td>
                   </tr>
                 ))
               ) : (
@@ -129,9 +162,15 @@ export default function Details() {
           >
             Prev
           </button>
-          <span className="text-zinc-400 text-sm sm:text-base">Page {currentPage}</span>
+          <span className="text-zinc-400 text-sm sm:text-base">
+            Page {currentPage}
+          </span>
           <button
-            onClick={() => setCurrentPage((prev) => (indexOfLastRow < sortedData.length ? prev + 1 : prev))}
+            onClick={() =>
+              setCurrentPage((prev) =>
+                indexOfLastRow < sortedData.length ? prev + 1 : prev,
+              )
+            }
             disabled={indexOfLastRow >= sortedData.length}
             className="px-3 sm:px-4 py-2 bg-zinc-700 rounded text-gray-300 hover:bg-zinc-900 transition disabled:opacity-50 w-1/3 sm:w-auto"
           >
