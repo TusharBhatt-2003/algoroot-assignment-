@@ -22,15 +22,10 @@ export default function Details() {
   const rowsPerPage = 5;
 
   const filteredData = mockData.filter((user) =>
-    Object.entries(user).some(([key, value]) => {
-      if (typeof value === "string")
-        return value.toLowerCase().includes(searchQuery.toLowerCase());
-      if (typeof value === "number" || value instanceof Date)
-        return value.toString().includes(searchQuery);
-      return false;
-    }),
+    Object.values(user).some((value) =>
+      value.toString().toLowerCase().includes(searchQuery.toLowerCase()),
+    ),
   );
-
   const sortedData = [...filteredData].sort((a, b) => {
     if (!sortConfig) return 0;
     const { key, direction } = sortConfig;
